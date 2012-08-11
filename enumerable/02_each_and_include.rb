@@ -2,7 +2,7 @@
 # Somemodel.conditions => Array or nil
 # target => given parameter (must be symbol)
 
-target = $*.first
+target = $*.first.dup
 $target = target # XXX:
 
 class SomeModel
@@ -32,5 +32,8 @@ records = SomeModel.where(some_flag: true)
 
 p records
 
-# not so beautiful
-p result = records.keep_if {|e| !e.conditions || e.conditions.include?(target) }
+def target.match?(model)
+  ! model.conditions || model.conditions.include?(self)
+end
+
+p result = records.keep_if(&target.method(:match?))
