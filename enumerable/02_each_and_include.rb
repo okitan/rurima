@@ -2,7 +2,7 @@
 # Somemodel.conditions => Array or nil
 # target => given parameter (must be symbol)
 
-target = $*.first.dup
+target = $*.first.dup # BK: ARGV is frozen
 $target = target # XXX:
 
 class SomeModel
